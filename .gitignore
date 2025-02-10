@@ -1,0 +1,7 @@
+env/
+frontend/.env
+frontend/src/__pycache__
+backend/.env
+backend/src/__pycache__
+backend/src/nlp/pretrained/
+*.pyc
