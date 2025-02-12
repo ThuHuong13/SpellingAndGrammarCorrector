@@ -9,6 +9,27 @@ from api import (
     get_corrections,
 )
 
+import re
+
+
+# Function to highlight text
+def highlight_text(text, data_list):
+    words = text.split()
+    dup = []
+    for entry in data_list:
+        word, replacement = entry[1], entry[4]
+        if word != "":
+            words[entry[3]] = (
+                f"<span style='color: red; font-weight: bold;'>{word}</span> "
+                f"(suggested: <i>{replacement}</i>)"
+            )
+            dup.append(entry[3] - 1)
+
+    for i in sorted(dup, reverse=True):
+        words.pop(i)
+
+    return " ".join(words)
+
 
 st.set_page_config(
     page_title="Spelling and Grammar Checker",
@@ -94,6 +115,7 @@ else:
             value=st.session_state.suggested_text,
             max_chars=3000,
             key="input_text",
+            height=200,
         )
         st.session_state.suggested_text = user_input
         col1, col2 = st.columns(2)
@@ -111,8 +133,11 @@ else:
                         if correction_edits == []:
                             st.success("No spelling errors found.")
                         else:
+                            highlighted_text = highlight_text(
+                                user_input, correction_edits
+                            )
                             st.markdown(
-                                f"Spell checked result: {correction_highlighted}",
+                                f"Spell checked result: {highlighted_text}",
                                 unsafe_allow_html=True,
                             )
                             st.markdown(
@@ -143,8 +168,12 @@ else:
                         if correction_edits == []:
                             st.success("No grammar errors found.")
                         else:
+                            highlighted_text = highlight_text(
+                                user_input, correction_edits
+                            )
+                            print(correction_edits)
                             st.markdown(
-                                f"Grammar checked result: {correction_highlighted}",
+                                f"Gramar checked result: {highlighted_text}",
                                 unsafe_allow_html=True,
                             )
                             st.markdown(

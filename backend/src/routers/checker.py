@@ -32,7 +32,6 @@ async def grammar_check(
     content: Checker, current_user: str = Depends(get_current_user)
 ):
     correction = nlp.correct_grammar(content.content)
-    print(correction)
     correction_highlighted = nlp.get_highlighted_text(content.content, correction)
     correction_edits = nlp.get_edits(content.content, correction)
 

@@ -52,7 +52,7 @@ def login(username, password):
         response = requests.post(
             f"{API_BASE_URL}/api/login",
             json={"username": username, "password": password},
-        )                   
+        )
         if response.status_code == 200:
             return (
                 True,

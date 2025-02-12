@@ -55,7 +55,7 @@ def get_corrections(
         )  # Ensure the current user is related to the document
         .all()
     )
-
+    
     # Serialize the corrections
     serialized_corrections = [
         {

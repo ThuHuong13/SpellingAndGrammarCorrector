@@ -11,7 +11,7 @@ def check_spell(content: str):
     try:
         response = requests.post(
             f"{API_BASE_URL}/api/checker/spell",
-            json={"content": content},                                                  
+            json={"content": content},
             headers={"Authorization": f"Bearer {st.session_state.access_token}"},
         )
         if response.status_code == 200:
